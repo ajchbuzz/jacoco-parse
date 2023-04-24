@@ -1,4 +1,6 @@
-# jacoco-parse
+# @7sean68/jacoco-parse
+
+forked from https://github.com/vokal/jacoco-parse
 
 Parse jacoco results file and return JSON
 
