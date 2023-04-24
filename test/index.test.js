@@ -207,4 +207,12 @@ describe("parseFile", function () {
             done();
         });
     });
+
+    it("parse a file with group", (done) => {
+        parse.parseFile(path.join(__dirname, "assets", "sampleWithGroup.xml"), function (err, result) {
+            assert.equal(err, null);
+            assert.equal(result.length, 2);
+            done();
+        });
+    })
 });

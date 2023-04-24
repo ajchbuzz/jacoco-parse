@@ -20,7 +20,13 @@ function getCounter( source, type ) {
 
 var unpackage = function ( report )
 {
-    var packages = report.package;
+    const immediatePackages = report.package || [];
+
+    const groups = report.group || [];
+
+    const groupPackages = groups.flatMap(group => group.package || []);
+
+    const packages = [...immediatePackages, ...groupPackages];
 
     var output = [];
 
