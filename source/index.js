@@ -65,7 +65,7 @@ var unpackage = function ( report )
                         }
                     }).filter(function(currentClass){
                         return currentClass != null;
-                    })
+                    })[0]
                 },
                 lines: {
                     found: Number( lines.$.covered ) + Number( lines.$.missed ),
