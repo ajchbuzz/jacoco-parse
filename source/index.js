@@ -25,7 +25,7 @@ var unpackage = function ( report )
     const groups = report.group || [];
 
     const groupPackages = groups.flatMap(group => group.package || []);
-
+    
     const packages = [...immediatePackages, ...groupPackages];
 
     var output = [];
@@ -46,18 +46,26 @@ var unpackage = function ( report )
                 functions: {
                     found: Number( methods.$.covered ) + Number( methods.$.missed ),
                     hit:  Number( methods.$.covered ),
-                    details: pack.class.reduce((result, currentClass) => {
-                        return !currentClass.method ? result : result.concat(currentClass.method.map(method => {
-                            var hit = method.counter.some(function (counter) {
-                                return counter.$.type === "METHOD" && counter.$.covered === "1";
-                            });
-                            return {
-                                name: method.$.name,
-                                line: Number(method.$.line),
-                                hit: hit ? 1 : 0
-                            };
-                        }));
-                    }, [])
+                    details: pack.class.map((currentClass) => {
+                        if(currentClass.$.sourcefilename == s.$.name){
+                            return currentClass.method.map(method => {
+                                    var hit = method.counter.some(function (counter) {
+                                        return counter.$.type === "METHOD" && counter.$.covered === "1";
+                                    });
+                                    if(method.$.name != '<init>'){
+                                        return {
+                                            name: method.$.name,
+                                            line: Number(method.$.line),
+                                            hit: hit ? 1 : 0
+                                        };
+                                    }
+                                }).filter(function(currentMethod){
+                                    return currentMethod != null;
+                                })
+                        }
+                    }).filter(function(currentClass){
+                        return currentClass != null;
+                    })
                 },
                 lines: {
                     found: Number( lines.$.covered ) + Number( lines.$.missed ),
